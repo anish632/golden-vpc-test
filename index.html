@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find Your State Rules - Volunteer Pathways Coalition</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#faf8f4;color:#2a2520;line-height:1.7;font-size:18px}
+.w{max-width:640px;margin:0 auto;padding:0 20px}
+header{background:#1a3a2a;padding:40px 0 36px}
+header h1{font-size:28px;font-weight:700;color:#fff;margin-bottom:10px}
+header p{color:#c8d6cf;font-size:17px}
+.lang{margin-top:12px}
+.lang a{color:#a8c8b4;font-size:14px;font-weight:600;text-decoration:underline;cursor:pointer}
+.bar{background:#fff;border-bottom:2px solid #d4d0cb;padding:20px 0;position:sticky;top:0;z-index:10}
+.bi{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.bar label{font-weight:700;font-size:16px;color:#6b6560}
+select{padding:14px 16px;border:2px solid #d4d0cb;border-radius:10px;font-family:inherit;font-size:17px;background:#fff;color:#2a2520;min-width:200px;max-width:300px}
+select:focus{border-color:#3a7a52;outline:3px solid #e8f5e9}
+.tabs{display:flex;gap:6px}
+.tab{padding:14px 20px;border:2px solid transparent;border-radius:10px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;background:#eae7e2;color:#6b6560;min-height:48px}
+.tab.on{background:#2d5f3f;color:#fff;border-color:#2d5f3f}
+.tab:hover:not(.on){background:#d4d0cb}
+main{padding:28px 0 80px}
+.empty{text-align:center;padding:60px 20px;color:#9e9892;background:#f0ece4;border-radius:16px}
+.empty h2{font-size:22px;color:#6b6560;margin-bottom:8px}
+.ctx{font-size:16px;color:#6b6560;margin-bottom:24px;padding:16px 20px;background:#f0ece4;border-radius:12px}
+.ctx b{color:#2a2520}
+.urgent{background:#fef2f2;border:2px solid #b91c1c;border-radius:12px;padding:16px 20px;margin-bottom:20px}
+.urgent b{color:#b91c1c}
+.card{background:#fff;border:2px solid #d4d0cb;border-radius:16px;padding:28px;margin-bottom:16px}
+.card h2{font-size:19px;font-weight:700;color:#2d5f3f;margin-bottom:14px}
+.card p{font-size:17px;margin-bottom:10px}
+.card ul{list-style:disc;padding-left:28px;margin:10px 0}
+.card li{padding:4px 0;font-size:17px}
+.opt{display:block;width:100%;padding:18px 24px;border:2px solid #d4d0cb;border-radius:12px;background:#fff;color:#2a2520;font-family:inherit;font-size:17px;font-weight:600;cursor:pointer;text-align:left;margin-bottom:10px}
+.opt:hover{border-color:#4a9a66;background:#f1f8e9}
+.done{background:#e8f5e9;border:2px solid #4a9a66;border-radius:16px;padding:32px;text-align:center}
+.done h2{font-size:22px;color:#2d5f3f;margin-bottom:8px}
+.done p{font-size:17px;color:#4a4540}
+.cta{display:inline-block;padding:18px 32px;background:#2d5f3f;border:none;border-radius:12px;color:#fff;font-family:inherit;font-size:18px;font-weight:700;text-decoration:none;cursor:pointer;margin-top:12px}
+.cta:hover{background:#3a7a52}
+.cta2{display:inline-block;padding:14px 24px;background:#f1f8e9;border:2px solid #4a9a66;border-radius:10px;color:#2d5f3f;font-size:16px;font-weight:700;text-decoration:none;margin-top:8px}
+.cta2:hover{background:#e8f5e9}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:16px}
+.back{display:inline-block;margin-bottom:20px;color:#2d5f3f;font-weight:600;cursor:pointer;background:none;border:none;font-family:inherit;font-size:15px;padding:8px 0;text-decoration:underline}
+.alert{background:#fef3c7;border:2px solid #92400e;border-radius:12px;padding:16px 20px;margin-top:14px}
+.alert b{color:#92400e}
+.note{background:#f1f8e9;border:2px solid #4a9a66;border-radius:12px;padding:16px 20px;margin-top:14px}
+.help{margin-top:20px;padding:16px 20px;background:#fff;border:2px solid #d4d0cb;border-radius:12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.help p{font-size:16px;margin:0;color:#4a4540;flex:1;min-width:200px}
+.help a{padding:12px 20px;background:#fff;border:2px solid #4a9a66;border-radius:10px;color:#2d5f3f;font-size:15px;font-weight:700;text-decoration:none}
+.help a:hover{background:#f1f8e9}
+.src{margin-top:24px;padding:20px;background:#f0ece4;border-radius:12px}
+.src h3{font-size:14px;font-weight:700;color:#6b6560;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.5px}
+.src a{color:#2d5f3f;font-weight:600;font-size:15px;text-decoration:none;display:block;padding:4px 0}
+.src a:hover{text-decoration:underline}
+.src .dm{font-size:12px;color:#9e9892;margin-left:4px}
+.disc{margin-top:12px;padding-top:12px;border-top:1px solid #d4d0cb;font-size:13px;color:#9e9892;text-align:center}
+.disc a{color:#6b6560;font-weight:600}
+.det{font-size:15px;color:#6b6560;margin-top:8px}
+.fields{background:#f0ece4;border-radius:10px;padding:16px 20px;margin-top:14px}
+.fields b{display:block;margin-bottom:6px}
+.fields ol{margin:0;padding-left:24px}
+.fields li{font-size:15px;padding:2px 0}
+.gcta{background:#f1f8e9;border:2px solid #4a9a66;border-radius:16px;padding:28px;margin-bottom:16px}
+.gcta h2{font-size:19px;font-weight:700;color:#2d5f3f;margin-bottom:14px}
+</style>
+</head>
+<body>
+<header><div class="w">
+<h1>Find your state's volunteering rules</h1>
+<p>Pick your state. We'll help you figure out what to do next.</p>
+</div></header>
+
+<div class="bar"><div class="w"><div class="bi">
+<div>
+<label>Your state</label><br>
+<select id="pk" onchange="S=0;go()">
+<option value="">Pick a state...</option>
+<option value="Alabama">Alabama</option>
+<option value="Alaska">Alaska</option>
+<option value="Arizona">Arizona</option>
+<option value="Arkansas">Arkansas</option>
+<option value="California">California</option>
+<option value="Colorado">Colorado</option>
+<option value="Connecticut">Connecticut</option>
+<option value="Delaware">Delaware</option>
+<option value="District of Columbia">District of Columbia</option>
+<option value="Florida">Florida</option>
+<option value="Georgia">Georgia</option>
+<option value="Hawaii">Hawaii</option>
+<option value="Idaho">Idaho</option>
+<option value="Illinois">Illinois</option>
+<option value="Indiana">Indiana</option>
+<option value="Iowa">Iowa</option>
+<option value="Kansas">Kansas</option>
+<option value="Kentucky">Kentucky</option>
+<option value="Louisiana">Louisiana</option>
+<option value="Maine">Maine</option>
+<option value="Maryland">Maryland</option>
+<option value="Massachusetts">Massachusetts</option>
+<option value="Michigan">Michigan</option>
+<option value="Minnesota">Minnesota</option>
+<option value="Mississippi">Mississippi</option>
+<option value="Missouri">Missouri</option>
+<option value="Montana">Montana</option>
+<option value="Nebraska">Nebraska</option>
+<option value="Nevada">Nevada</option>
+<option value="New Hampshire">New Hampshire</option>
+<option value="New Jersey">New Jersey</option>
+<option value="New Mexico">New Mexico</option>
+<option value="New York">New York</option>
+<option value="North Carolina">North Carolina</option>
+<option value="North Dakota">North Dakota</option>
+<option value="Ohio">Ohio</option>
+<option value="Oklahoma">Oklahoma</option>
+<option value="Oregon">Oregon</option>
+<option value="Pennsylvania">Pennsylvania</option>
+<option value="Rhode Island">Rhode Island</option>
+<option value="South Carolina">South Carolina</option>
+<option value="South Dakota">South Dakota</option>
+<option value="Tennessee">Tennessee</option>
+<option value="Texas">Texas</option>
+<option value="Utah">Utah</option>
+<option value="Vermont">Vermont</option>
+<option value="Virginia">Virginia</option>
+<option value="Washington">Washington</option>
+<option value="West Virginia">West Virginia</option>
+<option value="Wisconsin">Wisconsin</option>
+<option value="Wyoming">Wyoming</option>
+
+</select>
+</div>
+<div class="tabs">
+<button class="tab on" id="tb" onclick="T='b';S=0;updTabs();go()">I get benefits</button>
+<button class="tab" id="tn" onclick="T='n';S=0;updTabs();go()">I run a nonprofit</button>
+</div>
+</div></div></div>
+
+<main><div class="w">
+<div id="out">
+<div class="empty"><h2>Pick your state above</h2><p>We'll show you what to do next.</p></div>
+</div>
+</div></main>
+
+<script type="text/javascript">
+var D = {"Alabama":{"s":"No expansion - SNAP only","h":"","hp":"","p":"MyDHR","pu":"https://mydhr.alabama.gov","l":"211 Connects AL","lu":"https://www.211connectsalabama.org","pa":"AL Medicaid","pau":"https://medicaid.alabama.gov","sa":"AL DHR","sau":"https://dhr.alabama.gov","np":"AL Medicaid","npu":"https://medicaid.alabama.gov","ne":1,"na":0,"npa":"AL Association of Nonprofits","npau":"https://www.alabamanonprofits.org"},"Alaska":{"s":"Implementing Jan 2027","h":"https://health.alaska.gov/en/education/medicaid-work-and-community-engagement-requirements/","hp":"Apply for Medicaid — New Work Requirements","p":"MyAlaska","pu":"https://my.alaska.gov","l":"Alaska 211","lu":"https://alaska211.org","pa":"AK Public Assistance","pau":"https://health.alaska.gov/dpa","sa":"","sau":"","np":"AK Div. of Public Assistance","npu":"https://health.alaska.gov/dpa","ne":0,"na":0,"npa":"Foraker Group","npau":"https://www.forakergroup.org"},"Arizona":{"s":"Implementing Jan 2027","h":"https://www.azahcccs.gov/AHCCCS/Initiatives/HR1/","hp":"H.R. 1 Overview: Changes Are Coming","p":"Health-e-Arizona Plus","pu":"https://www.healthearizonaplus.gov","l":"211 Arizona","lu":"https://211arizona.org","pa":"AHCCCS","pau":"https://www.azahcccs.gov","sa":"AZ DES","sau":"https://des.az.gov","np":"AHCCCS","npu":"https://www.azahcccs.gov","ne":0,"na":0,"npa":"AZ Impact for Good","npau":"https://azimpactforgood.org","pn":"Nonprofits: email HR1@azahcccs.gov with questions. AHCCCS hosts community partner forums."},"Arkansas":{"s":"Soft launch Jul 2026; penalties Jan 2027","h":"https://humanservices.arkansas.gov/divisions-shared-services/medical-services/healthcare-programs/arhome/arhome-community-engagement-requirement/","hp":"ARHOME Community Engagement Requirement","p":"Access Arkansas","pu":"https://access.arkansas.gov","l":"211 Arkansas","lu":"https://www.arkansas211.org","pa":"AR DHS","pau":"https://humanservices.arkansas.gov","sa":"","sau":"","np":"AR DHS","npu":"https://humanservices.arkansas.gov","ne":0,"na":0,"npa":"Arkansas Nonprofit Alliance","npau":"https://www.arkansasnonprofits.org"},"California":{"s":"Implementing Jan 2027","h":"https://www.dhcs.ca.gov/federal-impacts","hp":"Tracking Federal Impacts: Medi-Cal Eligibility","p":"BenefitsCal","pu":"https://benefitscal.com","l":"211 California","lu":"https://www.211ca.org","pa":"Medi-Cal (DHCS)","pau":"https://www.dhcs.ca.gov","sa":"CalFresh (CDSS)","sau":"https://www.cdss.ca.gov","np":"CA DHCS","npu":"https://www.dhcs.ca.gov","ne":0,"na":0,"npa":"CalNonprofits","npau":"https://calnonprofits.org"},"Colorado":{"s":"Implementing Jan 2027","h":"https://hcpf.colorado.gov/hr1-medicaid-work-requirements","hp":"Health First Colorado Work Requirements","p":"Colorado PEAK","pu":"https://peak.state.co.us","l":"211 Colorado","lu":"https://www.211colorado.org","pa":"Health First CO","pau":"https://www.healthfirstcolorado.com","sa":"CO DHS","sau":"https://cdhs.colorado.gov","np":"CO HCPF","npu":"https://hcpf.colorado.gov","ne":0,"na":0,"npa":"CO Nonprofit Association","npau":"https://www.coloradononprofits.org","sc":"https://www.healthfirstcolorado.gov/work-requirements-screener"},"Connecticut":{"s":"Implementing Jan 2027","h":"https://portal.ct.gov/dss","hp":"H.R. 1 Work Rule Changes","p":"MyDSS","pu":"https://mydss.ct.gov","l":"211 Connecticut","lu":"https://www.211ct.org","pa":"HUSKY Health","pau":"https://portal.ct.gov/husky","sa":"CT DSS","sau":"https://portal.ct.gov/dss","np":"CT DSS","npu":"https://portal.ct.gov/dss","ne":0,"na":0,"npa":"CT Community Nonprofit Alliance","npau":"https://ctnonprofitalliance.org","sc":"https://portal.ct.gov/dss"},"Delaware":{"s":"Implementing Jan 2027","h":"https://dhss.delaware.gov/dmma/home/medicaid-engage/","hp":"Medicaid ENGAGE","p":"Delaware ASSIST","pu":"https://assist.dhss.delaware.gov","l":"Delaware 211","lu":"https://www.delaware211.org","pa":"DE DHSS","pau":"https://dhss.delaware.gov","sa":"","sau":"","np":"DE DHSS","npu":"https://dhss.delaware.gov","ne":0,"na":0,"npa":"DANA","npau":"https://delawarenonprofit.org"},"District of Columbia":{"s":"Implementing Jan 2027","h":"https://dhcf.dc.gov/page/federal-changes-medicaid","hp":"Federal Changes to Medicaid","p":"District Direct","pu":"https://districtdirect.dc.gov","l":"DC 211","lu":"https://www.211.org","pa":"DC DHCF","pau":"https://dhcf.dc.gov","sa":"DC DHS","sau":"https://dhs.dc.gov","np":"DC DHCF","npu":"https://dhcf.dc.gov","ne":0,"na":0,"npa":"Center for Nonprofit Advancement","npau":"https://www.nonprofitadvancement.org"},"Florida":{"s":"No expansion - SNAP only","h":"","hp":"","p":"MyACCESS Florida","pu":"https://myaccess.myflfamilies.com","l":"Florida 211","lu":"https://fl211.org","pa":"FL Medicaid (AHCA)","pau":"https://ahca.myflorida.com","sa":"FL DCF","sau":"https://www.myflfamilies.com","np":"FL AHCA","npu":"https://ahca.myflorida.com","ne":1,"na":0,"npa":"Florida Nonprofit Alliance","npau":"https://flnonprofits.org"},"Georgia":{"s":"Enforcing since 2023 (Pathways)","h":"https://medicaid.georgia.gov/pathways","hp":"Georgia Pathways to Coverage","p":"Georgia Gateway","pu":"https://gateway.ga.gov","l":"211 Georgia","lu":"https://www.211online.unitedwayatlanta.org","pa":"GA Pathways (DCH)","pau":"https://dch.georgia.gov","sa":"GA DFCS","sau":"https://dfcs.georgia.gov","np":"GA DCH","npu":"https://dch.georgia.gov","ne":0,"na":0,"npa":"GA Center for Nonprofits","npau":"https://www.gcn.org"},"Hawaii":{"s":"Implementing Jan 2027","h":"https://medquest.hawaii.gov/hr1","hp":"Stay Well, Stay Covered Toolkit","p":"KOLEA","pu":"https://medical.mybenefits.hawaii.gov","l":"Aloha United Way 211","lu":"https://www.auw211.org","pa":"Med-QUEST","pau":"https://medquest.hawaii.gov","sa":"HI DHS","sau":"https://humanservices.hawaii.gov","np":"HI Med-QUEST","npu":"https://medquest.hawaii.gov","ne":0,"na":0,"npa":"HANO","npau":"https://www.hano-hawaii.org"},"Idaho":{"s":"Implementing Jan 2027","h":"https://healthandwelfare.idaho.gov/news/idaho-department-health-and-welfare-announces-work-requirements-medicaid-expansion-recipients","hp":"Work Requirements Announcement","p":"idalink","pu":"https://idalink.idaho.gov","l":"Idaho CareLine 211","lu":"https://211-idaho.communityos.org","pa":"ID DHW","pau":"https://healthandwelfare.idaho.gov","sa":"","sau":"","np":"ID DHW","npu":"https://healthandwelfare.idaho.gov","ne":0,"na":0,"npa":"Idaho Nonprofit Center","npau":"https://www.idahononprofits.org"},"Illinois":{"s":"Implementing Jan 2027","h":"https://hfs.illinois.gov/info/fedresctr.html","hp":"New Changes Coming to Medicaid","p":"ABE Illinois","pu":"https://abe.illinois.gov","l":"211 Illinois","lu":"https://211illinois.org","pa":"IL HFS","pau":"https://hfs.illinois.gov","sa":"IDHS","sau":"https://www.dhs.state.il.us","np":"IL HFS","npu":"https://hfs.illinois.gov","ne":0,"na":0,"npa":"Forefront","npau":"https://myforefront.org"},"Indiana":{"s":"Implementing Jan 2027","h":"https://www.in.gov/fssa/hip","hp":"HIP Work Requirements","p":"FSSA Benefits Portal","pu":"https://fssabenefits.in.gov","l":"Indiana 211","lu":"https://in211.communityos.org","pa":"IN FSSA","pau":"https://www.in.gov/fssa","sa":"","sau":"","np":"IN FSSA","npu":"https://www.in.gov/fssa","ne":0,"na":1,"npa":"IN Philanthropy Alliance","npau":"https://www.inphilanthropy.org","pn":"Indiana state law prohibits self-attestation. Signed third-party verification required."},"Iowa":{"s":"Enforcing Dec 1, 2026","h":"https://hhs.iowa.gov/medicaid/plans-programs/iowa-health-wellness-plan/ihawp-community-engagement-requirements","hp":"IHAWP Community Engagement Requirements","p":"IA HHS Benefits Portal","pu":"https://dhsservices.iowa.gov","l":"211 Iowa","lu":"https://www.211iowa.org","pa":"IA HHS","pau":"https://hhs.iowa.gov","sa":"","sau":"","np":"IA HHS","npu":"https://hhs.iowa.gov","ne":0,"na":0,"npa":"IA Nonprofit Resource Center","npau":"https://inrc.law.uiowa.edu","pn":"Proof must show: org name, address, activity, dates, hours, contact person. Volunteer Iowa lists approved sites."},"Kansas":{"s":"No expansion - SNAP only","h":"","hp":"","p":"DCF Self-Service Portal","pu":"https://cssp.kees.ks.gov","l":"Kansas 211","lu":"https://www.211kansas.org","pa":"KanCare","pau":"https://www.kancare.ks.gov","sa":"KS DCF","sau":"https://www.dcf.ks.gov","np":"KanCare","npu":"https://www.kancare.ks.gov","ne":1,"na":0,"npa":"Nonprofit Chamber of Service","npau":"https://www.nonprofitchamber.org"},"Kentucky":{"s":"Implementing Jan 2027","h":"https://khbe.ky.gov/Enrollment/Pages/MedicaidWorkCE.aspx","hp":"Changes Coming to Medicaid","p":"kynect","pu":"https://kynect.ky.gov","l":"kynectors","lu":"https://kynect.ky.gov","pa":"KY CHFS","pau":"https://www.chfs.ky.gov","sa":"","sau":"","np":"KY CHFS","npu":"https://www.chfs.ky.gov","ne":0,"na":0,"npa":"Kentucky Nonprofit Network","npau":"https://www.kynonprofits.org"},"Louisiana":{"s":"Implementing Jan 2027","h":"https://ldh.la.gov/medicaid/work-requirements","hp":"Medicaid Work or Community Engagement Requirements","p":"CAFÉ","pu":"https://cafe-cp.dcfs.la.gov","l":"Louisiana 211","lu":"https://www.louisiana211.org","pa":"LA Medicaid (LDH)","pau":"https://ldh.la.gov","sa":"LA DCFS","sau":"https://www.dcfs.louisiana.gov","np":"LA LDH","npu":"https://ldh.la.gov","ne":0,"na":0,"npa":"LANO","npau":"https://www.lano.org","fn":"Community Engagement Verification Form","fu":"https://ldh.la.gov/assets/medicaid/HR1/CommunityEngagementRequirementsVerificationForm.pdf"},"Maine":{"s":"Implementing Jan 2027","h":"https://www.maine.gov/dhhs","hp":"Work Requirements for MaineCare Expansion Adults","p":"My Maine Connection","pu":"https://www.mymaineconnection.gov","l":"211 Maine","lu":"https://211maine.org","pa":"MaineCare (OFI)","pau":"https://www.maine.gov/dhhs/ofi","sa":"","sau":"","np":"ME DHHS","npu":"https://www.maine.gov/dhhs","ne":0,"na":0,"npa":"MANP","npau":"https://www.nonprofitmaine.org"},"Maryland":{"s":"Implementing Jan 2027","h":"https://health.maryland.gov/mmcp/Pages/workrequirements.aspx","hp":"New Requirements for Medicaid","p":"myMDTHINK","pu":"https://mymdthink.maryland.gov","l":"211 Maryland","lu":"https://211md.org","pa":"MD Health Connection","pau":"https://www.marylandhealthconnection.gov","sa":"MDH","sau":"https://health.maryland.gov","np":"MDH","npu":"https://health.maryland.gov","ne":0,"na":0,"npa":"Maryland Nonprofits","npau":"https://www.marylandnonprofits.org","sc":"https://health.maryland.gov/mmcp/Pages/workrequirements.aspx"},"Massachusetts":{"s":"Implementing Jan 2027","h":"https://www.mass.gov/masshealth","hp":"New Work and Education Requirements","p":"DTA Connect","pu":"https://dtaconnect.eohhs.mass.gov","l":"Mass 211","lu":"https://mass211.org","pa":"MassHealth","pau":"https://www.mass.gov/masshealth","sa":"MA DTA","sau":"https://www.mass.gov/dta","np":"MassHealth","npu":"https://www.mass.gov/masshealth","ne":0,"na":0,"npa":"MNN","npau":"https://massnonprofitnet.org"},"Michigan":{"s":"Implementing Jan 2027","h":"https://www.michigan.gov/mdhhs","hp":"New Healthy Michigan Plan Work Requirements","p":"MI Bridges","pu":"https://newmibridges.michigan.gov","l":"Michigan 211","lu":"https://www.mi211.org","pa":"MDHHS","pau":"https://www.michigan.gov/mdhhs","sa":"","sau":"","np":"MDHHS","npu":"https://www.michigan.gov/mdhhs","ne":0,"na":0,"npa":"MNA","npau":"https://www.mnaonline.org"},"Minnesota":{"s":"Implementing Jan 2027","h":"https://mn.gov/dhs","hp":"Medicaid Work Requirements","p":"MNbenefits","pu":"https://mnbenefits.mn.gov","l":"United Way 211 MN","lu":"https://www.211unitedway.org","pa":"MN DHS","pau":"https://mn.gov/dhs","sa":"","sau":"","np":"MN DHS","npu":"https://mn.gov/dhs","ne":0,"na":0,"npa":"MN Council of Nonprofits","npau":"https://www.minnesotanonprofits.org"},"Mississippi":{"s":"No expansion - SNAP only","h":"","hp":"","p":"Access MS","pu":"https://www.access.ms.gov","l":"Mississippi 211","lu":"https://www.211ms.org","pa":"MS Medicaid","pau":"https://medicaid.ms.gov","sa":"MDHS","sau":"https://www.mdhs.ms.gov","np":"MS Medicaid","npu":"https://medicaid.ms.gov","ne":1,"na":0,"npa":"MS Alliance of Nonprofits","npau":"https://www.alliancems.org"},"Missouri":{"s":"Implementing Jan 2027","h":"https://dss.mo.gov/hr1/participant-resources","hp":"H.R. 1 Implementation","p":"myDSS","pu":"https://mydss.mo.gov","l":"Missouri 211","lu":"https://www.211helps.org","pa":"MO HealthNet / DSS","pau":"https://mydss.mo.gov","sa":"","sau":"","np":"MO DSS","npu":"https://mydss.mo.gov","ne":0,"na":0,"npa":"MO Nonprofit Network","npau":"https://www.mononprofits.org"},"Montana":{"s":"Enforcing since Jul 2026","h":"https://dphhs.mt.gov/medicaidchanges/","hp":"Medicaid Changes FAQs","p":"apply.mt.gov","pu":"https://apply.mt.gov","l":"Montana 211","lu":"https://montana211.org","pa":"MT DPHHS","pau":"https://dphhs.mt.gov","sa":"","sau":"","np":"MT DPHHS","npu":"https://dphhs.mt.gov","ne":0,"na":0,"npa":"MT Nonprofit Association","npau":"https://www.mtnonprofit.org"},"Nebraska":{"s":"Enforcing since May 2026","h":"https://dhhs.ne.gov/Pages/WorkRequirements.aspx","hp":"Preparing for Medicaid Work Requirements","p":"iServe Nebraska","pu":"https://iserve.nebraska.gov","l":"Nebraska 211","lu":"https://ne211.org","pa":"NE DHHS","pau":"https://dhhs.ne.gov","sa":"","sau":"","np":"NE DHHS","npu":"https://dhhs.ne.gov","ne":0,"na":0,"npa":"NAM","npau":"https://www.nonprofitam.org","fn":"Individual Declaration Form (MLTC-118)","fu":"https://dhhs.ne.gov/Documents/Medicaid%20Work%20Requirements%20Declaration%20Form.pdf","reg":"DHHS.MedicaidCommunications@nebraska.gov","pn":"Nonprofits must register as volunteer sites. Email DHHS.MedicaidCommunications@nebraska.gov."},"Nevada":{"s":"Implementing Jan 2027","h":"https://www.dss.nv.gov/programs/Medicaid/medicaid-eligibility-rules-are-changing/","hp":"Medicaid Eligibility Rules are Changing","p":"Access Nevada","pu":"https://accessnevada.dwss.nv.gov","l":"Nevada 211","lu":"https://www.nevada211.org","pa":"NV DWSS","pau":"https://dwss.nv.gov","sa":"","sau":"","np":"NV DWSS","npu":"https://dwss.nv.gov","ne":0,"na":0,"npa":"NV Alliance for Nonprofits","npau":"https://www.nvnonprofits.org"},"New Hampshire":{"s":"Implementing Jan 2027","h":"https://www.dhhs.nh.gov/programs-services/stay-covered-new-hampshire/medicaid-work-requirements-what-you-need-know","hp":"What You Need to Know","p":"NH EASY","pu":"https://nheasy.nh.gov","l":"211 NH","lu":"https://www.211nh.org","pa":"NH DHHS","pau":"https://www.dhhs.nh.gov","sa":"","sau":"","np":"NH DHHS","npu":"https://www.dhhs.nh.gov","ne":0,"na":1,"npa":"NH Center for Nonprofits","npau":"https://www.nhnonprofits.org","pn":"New Hampshire state law prohibits self-attestation. Signed third-party verification required."},"New Jersey":{"s":"Implementing Jan 2027","h":"https://www.nj.gov/humanservices/dmahs/obbba/medicaid-federal-changes.shtml","hp":"Federal Changes to NJ FamilyCare","p":"NJHelps","pu":"https://www.njhelps.gov","l":"NJ 211","lu":"https://www.nj211.org","pa":"NJ FamilyCare","pau":"https://njfamilycare.dhs.state.nj.us","sa":"NJ DHS","sau":"https://www.nj.gov/humanservices","np":"NJ FamilyCare","npu":"https://njfamilycare.dhs.state.nj.us","ne":0,"na":0,"npa":"Center for Non-Profits","npau":"https://njnonprofits.org"},"New Mexico":{"s":"Implementing Jan 2027","h":"https://www.hca.nm.gov/medicaid-changes","hp":"Medicaid Changes","p":"YESNM","pu":"https://www.yes.state.nm.us","l":"New Mexico 211","lu":"https://www.nm211.org","pa":"NM HCA","pau":"https://www.hca.nm.gov","sa":"","sau":"","np":"NM HCA","npu":"https://www.hca.nm.gov","ne":0,"na":0,"npa":"Center for Nonprofit Excellence","npau":"https://www.centerfornonprofitexcellence.org"},"New York":{"s":"Implementing Jan 2027","h":"https://info.nystateofhealth.ny.gov/stay-covered","hp":"Changes to Medicaid Coverage","p":"myBenefits","pu":"https://mybenefits.ny.gov","l":"211 NY","lu":"https://www.211nys.org","pa":"NY State of Health","pau":"https://nystateofhealth.ny.gov","sa":"NY OTDA","sau":"https://otda.ny.gov","np":"NY DOH","npu":"https://www.health.ny.gov","ne":0,"na":0,"npa":"NYCON","npau":"https://www.nycon.org"},"North Carolina":{"s":"Implementing Jan 2027","h":"https://medicaid.ncdhhs.gov/beneficiaries/impact-hr-1-and-federal-changes-medicaid/work-and-community-engagement-requirement","hp":"NC Medicaid Work and Community Engagement","p":"ePASS","pu":"https://epass.nc.gov","l":"NC 211","lu":"https://nc211.org","pa":"NC Medicaid","pau":"https://medicaid.ncdhhs.gov","sa":"NCDHHS","sau":"https://www.ncdhhs.gov","np":"NCDHHS Medicaid","npu":"https://medicaid.ncdhhs.gov","ne":0,"na":0,"npa":"NC Center for Nonprofits","npau":"https://ncnonprofits.org","sc":"https://medicaid.ncdhhs.gov/beneficiaries/impact-hr-1-and-federal-changes-medicaid/work-and-community-engagement-requirement","pn":"Provider/partner toolkit and online screener available."},"North Dakota":{"s":"Implementing Jan 2027","h":"https://www.hhs.nd.gov/human-services/medicaid/StayCoveredND","hp":"Stay Covered ND","p":"ND Self-Service Portal","pu":"https://apps.nd.gov/dhs/ssp","l":"FirstLink 211 ND","lu":"https://myfirstlink.org","pa":"ND HHS","pau":"https://www.hhs.nd.gov","sa":"","sau":"","np":"ND HHS","npu":"https://www.hhs.nd.gov","ne":0,"na":0,"npa":"NDANO","npau":"https://www.ndano.org"},"Ohio":{"s":"Implementing Jan 2027","h":"https://medicaid.ohio.gov/resources-for-providers/special-programs-and-initiatives/group-viii","hp":"Medicaid Group VIII Work Requirements","p":"Ohio Benefits","pu":"https://ssp.benefits.ohio.gov","l":"211 Ohio","lu":"https://www.211oh.org","pa":"OH Medicaid","pau":"https://medicaid.ohio.gov","sa":"ODJFS","sau":"https://jfs.ohio.gov","np":"OH Medicaid","npu":"https://medicaid.ohio.gov","ne":0,"na":0,"npa":"OANO","npau":"https://www.oano.org","fn":"ABAWD Verification (JFS 07410)","fu":"https://co.summitoh.net/files-generic/24569/file/jfs-07410.pdf","pn":"Communications Partner Toolkit available with flyers, rack cards, social media."},"Oklahoma":{"s":"Implementing Jan 2027","h":"https://oklahoma.gov/ohca","hp":"SoonerCare Work Requirements","p":"MySoonerCare","pu":"https://www.mysoonercare.org","l":"211 Oklahoma","lu":"https://www.211oklahoma.org","pa":"SoonerCare (OHCA)","pau":"https://oklahoma.gov/ohca","sa":"OKDHS","sau":"https://oklahoma.gov/okdhs","np":"OHCA","npu":"https://oklahoma.gov/ohca","ne":0,"na":0,"npa":"OK Center for Nonprofits","npau":"https://www.oklahomacenterfornonprofits.org"},"Oregon":{"s":"Implementing Jan 2027","h":"https://www.oregon.gov/oha","hp":"Oregon Health Plan Changes 2026-2028","p":"ONE Oregon","pu":"https://one.oregon.gov","l":"211info OR","lu":"https://www.211info.org","pa":"Oregon Health Plan","pau":"https://www.oregon.gov/oha","sa":"ODHS","sau":"https://www.oregon.gov/odhs","np":"OHA","npu":"https://www.oregon.gov/oha","ne":0,"na":0,"npa":"NAO","npau":"https://nonprofitoregon.org"},"Pennsylvania":{"s":"Implementing Jan 2027","h":"https://www.pa.gov/agencies/dhs","hp":"Changes Coming to Medicaid","p":"COMPASS","pu":"https://www.compass.state.pa.us","l":"PA 211","lu":"https://www.pa211.org","pa":"PA DHS","pau":"https://www.pa.gov/agencies/dhs","sa":"","sau":"","np":"PA DHS","npu":"https://www.pa.gov/agencies/dhs","ne":0,"na":0,"npa":"PANO","npau":"https://pano.org","pn":"State hiring 250 new workers. Supervisor signs form and returns to volunteer."},"Rhode Island":{"s":"Implementing Jan 2027","h":"https://staycovered.ri.gov/work","hp":"Medicaid Work Requirements","p":"HealthyRhode","pu":"https://healthyrhode.ri.gov","l":"United Way 211 RI","lu":"https://www.211ri.org","pa":"RI EOHHS","pau":"https://eohhs.ri.gov","sa":"RI DHS","sau":"https://dhs.ri.gov","np":"RI EOHHS","npu":"https://eohhs.ri.gov","ne":0,"na":0,"npa":"United Way RI","npau":"https://www.unitedwayri.org","sc":"https://staycovered.ri.gov/work","pn":"Multilingual toolkit at StayCovered.RI.gov/Work."},"South Carolina":{"s":"No expansion - SNAP only","h":"","hp":"","p":"SCMAPP","pu":"https://apply.scdhhs.gov","l":"SC 211","lu":"https://www.sc211.org","pa":"Healthy Connections","pau":"https://www.scdhhs.gov","sa":"SC DSS","sau":"https://dss.sc.gov","np":"SCDHHS","npu":"https://www.scdhhs.gov","ne":1,"na":0,"npa":"Together SC","npau":"https://www.togethersc.org"},"South Dakota":{"s":"Implementing Jan 2027","h":"https://dss.sd.gov/medicaid/HR1.aspx","hp":"Medicaid Eligibility Changes Coming Soon","p":"SD DSS Benefits Portal","pu":"https://dss.sd.gov","l":"Helpline Center 211","lu":"https://www.helplinecenter.org","pa":"SD DSS","pau":"https://dss.sd.gov","sa":"","sau":"","np":"SD DSS","npu":"https://dss.sd.gov","ne":0,"na":0,"npa":"SD Nonprofit Network","npau":"https://www.sdnonprofitnetwork.org"},"Tennessee":{"s":"No expansion - SNAP only","h":"","hp":"","p":"TennCare Connect","pu":"https://tenncareconnect.tn.gov","l":"TN 211","lu":"https://tn211.myresourcedirectory.com","pa":"TennCare","pau":"https://www.tn.gov/tenncare","sa":"TDHS","sau":"https://www.tn.gov/humanservices","np":"TennCare","npu":"https://www.tn.gov/tenncare","ne":1,"na":0,"npa":"TN Nonprofit Network","npau":"https://www.tnnonprofits.org"},"Texas":{"s":"No expansion - SNAP only","h":"","hp":"","p":"Your Texas Benefits","pu":"https://www.yourtexasbenefits.com","l":"211 Texas","lu":"https://www.211texas.org","pa":"TX HHSC","pau":"https://www.hhs.texas.gov","sa":"","sau":"","np":"TX HHSC","npu":"https://www.hhs.texas.gov","ne":1,"na":0,"npa":"TANO","npau":"https://www.tano.org"},"Utah":{"s":"Implementing Jan 2027","h":"https://medicaid.utah.gov/community-engagement-requirement/","hp":"Community Engagement Requirement","p":"myCase","pu":"https://jobs.utah.gov/mycase","l":"211 Utah","lu":"https://211utah.org","pa":"UT Medicaid","pau":"https://medicaid.utah.gov","sa":"UT DWS","sau":"https://jobs.utah.gov","np":"UT Medicaid","npu":"https://medicaid.utah.gov","ne":0,"na":1,"npa":"UNA","npau":"https://utahnonprofits.org","pn":"Utah state law prohibits self-attestation. Signed third-party verification required."},"Vermont":{"s":"Implementing Jan 2027","h":"https://dvha.vermont.gov/medicaid-changes","hp":"Federal Medicaid Changes: Vermont Impact","p":"MyBenefits","pu":"https://mybenefits.vt.gov","l":"Vermont 211","lu":"https://vermont211.org","pa":"Green Mountain Care","pau":"https://dvha.vermont.gov","sa":"VT DCF","sau":"https://dcf.vermont.gov","np":"VT DVHA","npu":"https://dvha.vermont.gov","ne":0,"na":0,"npa":"Common Good Vermont","npau":"https://commongoodvt.org","sc":"https://dvha.vermont.gov/medicaid-changes"},"Virginia":{"s":"Implementing Jan 2027","h":"https://dmas.virginia.gov/news-updates/new-federal-requirements/","hp":"Federal Work Requirements","p":"CommonHelp","pu":"https://commonhelp.virginia.gov","l":"211 Virginia","lu":"https://www.211virginia.org","pa":"Cover Virginia","pau":"https://coverva.dmas.virginia.gov","sa":"VA DSS","sau":"https://www.dss.virginia.gov","np":"VA DMAS","npu":"https://www.dmas.virginia.gov","ne":0,"na":0,"npa":"National Council of Nonprofits (VA)","npau":"https://www.councilofnonprofits.org","pn":"Register opportunities via Serve Virginia to connect with beneficiaries."},"Washington":{"s":"Implementing Jan 2027","h":"https://www.hca.wa.gov/free-or-low-cost-health-care/i-need-medical-dental-or-vision-care/apple-health-medicaid-work-requirements","hp":"Apple Health Work Requirements","p":"Washington Connection","pu":"https://www.washingtonconnection.org","l":"WA 211","lu":"https://wa211.org","pa":"Apple Health (HCA)","pau":"https://www.hca.wa.gov","sa":"WA DSHS","sau":"https://www.dshs.wa.gov","np":"WA HCA","npu":"https://www.hca.wa.gov","ne":0,"na":0,"npa":"Washington Nonprofits","npau":"https://washingtonnonprofits.org"},"West Virginia":{"s":"Implementing Jan 2027","h":"https://bms.wv.gov/new-medicaid-rules-are-coming","hp":"New Medicaid Rules are Coming","p":"WV PATH","pu":"https://www.wvpath.wv.gov","l":"WV 211","lu":"https://wv211.org","pa":"WV DoHS","pau":"https://dhhr.wv.gov","sa":"","sau":"","np":"WV DoHS","npu":"https://dhhr.wv.gov","ne":0,"na":0,"npa":"WVNPA","npau":"https://wvnpa.org"},"Wisconsin":{"s":"1115 waiver populations","h":"https://www.dhs.wisconsin.gov/medicaid/work.htm","hp":"New Federal Work Requirement","p":"ACCESS Wisconsin","pu":"https://access.wisconsin.gov","l":"211 Wisconsin","lu":"https://211wisconsin.communityos.org","pa":"ForwardHealth (DHS)","pau":"https://www.dhs.wisconsin.gov","sa":"","sau":"","np":"WI DHS","npu":"https://www.dhs.wisconsin.gov","ne":0,"na":0,"npa":"WNA","npau":"https://www.wisconsinnonprofits.org","sc":"https://www.dhs.wisconsin.gov/medicaid/work.htm","pn":"Partner resources at dhs.wisconsin.gov. Applies to BadgerCare Plus childless adults (1115 waiver)."},"Wyoming":{"s":"No expansion - SNAP only","h":"","hp":"","p":"WES","pu":"https://www.wesystem.wyo.gov","l":"Wyoming 211","lu":"https://wy211.communityos.org","pa":"WY Medicaid (WDH)","pau":"https://health.wyo.gov","sa":"WY DFS","sau":"https://dfs.wyo.gov","np":"WY WDH","npu":"https://health.wyo.gov","ne":1,"na":0,"npa":"WY Nonprofit Network","npau":"https://www.wynonprofit.org"}};
+var T = "b";
+var S = 0;
+
+function updTabs() {
+  document.getElementById("tb").className = T === "b" ? "tab on" : "tab";
+  document.getElementById("tn").className = T === "n" ? "tab on" : "tab";
+}
+
+function esc(s) {
+  if (!s) return "";
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function getDom(u) {
+  try { return new URL(u).hostname.replace("www.",""); } catch(e) { return ""; }
+}
+
+function go() {
+  var pk = document.getElementById("pk");
+  var nm = pk.value;
+  var out = document.getElementById("out");
+  if (!nm) {
+    out.innerHTML = '<div class="empty"><h2>Pick your state above</h2><p>We will show you what to do next.</p></div>';
+    return;
+  }
+  var d = D[nm];
+  if (!d) return;
+  if (T === "b") doBn(d, nm);
+  else doNp(d, nm);
+}
+
+function helpBar(d) {
+  if (!d.lu) return "";
+  return '<div class="help"><p>Have questions? Want to talk to someone? <b>Call 211</b> - it is free and confidential.</p><a href="' + d.lu + '" target="_blank">' + esc(d.l || "Call 211") + ' &rarr;</a></div>';
+}
+
+function srcBox(links) {
+  var items = "";
+  for (var i = 0; i < links.length; i++) {
+    if (links[i][1]) {
+      items += '<a href="' + links[i][1] + '" target="_blank">' + esc(links[i][0]) + '<span class="dm">' + esc(getDom(links[i][1])) + '</span></a>';
+    }
+  }
+  if (!items) return "";
+  items += '<a href="https://www.medicaid.gov/resources-for-states/working-families-tax-cut-legislation/community-engagement" target="_blank">Federal rules (CMS)<span class="dm">medicaid.gov</span></a>';
+  return '<div class="src"><h3>Official state sources</h3>' + items + '<div class="disc">These rules may change. Check your state resources directly to confirm. <a href="mailto:info@volunteerpathwayscoalition.org?subject=H.R.%201%20State%20Rule%20Update">Work for a state agency? Submit an update.</a></div></div>';
+}
+
+function bnSrc(d, nm) {
+  return srcBox([
+    [d.hp || nm + " rules", d.h],
+    [d.p || "Benefits portal", d.pu],
+    [d.pa || "Health agency", d.pau],
+    [d.sa || "", d.sau || ""],
+    [d.l || "211", d.lu]
+  ]);
+}
+
+function npSrc(d, nm) {
+  return srcBox([
+    [d.hp || nm + " rules", d.h],
+    [d.np || "State agency", d.npu || ""],
+    [d.npa || "", d.npau || ""],
+    [d.p || "Benefits portal", d.pu]
+  ]);
+}
+
+function formLink(d) {
+  if (!d.fn || !d.fu) return "";
+  return '<div class="note"><p><b>Your state has an official form:</b> <a href="' + d.fu + '" target="_blank" style="color:#2d5f3f;font-weight:700">' + esc(d.fn) + '</a></p></div>';
+}
+
+function ctxBox(d, nm) {
+  var t = "";
+  if (d.ne) t = "<b>" + esc(nm) + "</b> did not expand Medicaid. SNAP food help rules (80 hours/month for adults 18-64) still apply.";
+  else if (d.s.indexOf("Enforcing") >= 0) t = "<b>" + esc(nm) + "</b> is already enforcing work rules. Adults 19-64 on Medicaid must show 80 hours/month of work, school, or volunteering.";
+  else if (d.s.indexOf("Soft") >= 0) t = "<b>" + esc(nm) + "</b> is tracking hours now but not removing coverage yet. Full rules start January 2027.";
+  else t = "<b>" + esc(nm) + "</b> starts new Medicaid rules January 1, 2027. Adults 19-64 must show 80 hours/month of work, school, or volunteering.";
+  return '<div class="ctx">' + t + '</div>';
+}
+
+function urgentBox(d, nm) {
+  if (d.s.indexOf("Enforcing") < 0 || d.ne) return "";
+  return '<div class="urgent"><p><b>These rules are in effect now.</b> ' + esc(nm) + ' is already enforcing work rules. Do not wait - take action today to keep your coverage.</p></div>';
+}
+
+function setStep(n) { S = n; go(); }
+
+function doBn(d, nm) {
+  var out = document.getElementById("out");
+  var lookback = (d.s.indexOf("Enforcing") >= 0 && !d.ne) ? "" : '<p class="det"><b>Important:</b> Most states check the 1 month before you apply or renew. If your state starts January 2027 and you apply that month, the state checks December 2026. Start volunteering now so you have hours to show.</p>';
+  var screener = d.sc ? '<p class="det"><a href="' + d.sc + '" target="_blank" style="color:#2d5f3f;font-weight:600">Use your state screening tool to check if the rules apply to you &rarr;</a></p>' : "";
+
+  if (S === 0) {
+    out.innerHTML = urgentBox(d, nm) + ctxBox(d, nm) +
+      '<div class="card"><h2>Do you already work or go to school?</h2>' +
+      '<p>Do you work at least 80 hours a month, earn $580 or more, or go to school at least half time?</p>' +
+      '<button class="opt" onclick="setStep('dw')">Yes, I do</button>' +
+      '<button class="opt" onclick="setStep(1)">No</button>' +
+      '<button class="opt" onclick="setStep(1)" style="color:#9e9892">I am not sure</button>' +
+      '</div>' + lookback + screener + helpBar(d) + bnSrc(d, nm);
+    return;
+  }
+
+  if (S === "dw") {
+    out.innerHTML = '<button class="back" onclick="setStep(0)">&larr; Start over</button>' +
+      '<div class="done"><h2>You are likely already covered.</h2>' +
+      '<p>If you work enough hours or go to school, you already meet the rules.</p>' +
+      '<p style="margin-top:14px;font-size:15px;color:#6b6560">Make sure your state has your latest information so nothing changes by mistake.</p>' +
+      '<p class="det">You renew every 6 months now (not once a year). At each check, the state looks at just the month before - not all 6 months. Show 80 hours in that one month.</p>' +
+      (d.pu ? '<a class="cta2" href="' + d.pu + '" target="_blank">Check your info on ' + esc(d.p || "your state site") + ' &rarr;</a>' : "") +
+      '</div>' + helpBar(d) + bnSrc(d, nm);
+    return;
+  }
+
+  if (S === 1) {
+    out.innerHTML = '<button class="back" onclick="setStep(0)">&larr; Start over</button>' +
+      urgentBox(d, nm) + ctxBox(d, nm) +
+      '<div class="card"><h2>Are any of these true for you?</h2><ul>' +
+      '<li>I am pregnant</li>' +
+      '<li>I have a disability or serious health problem</li>' +
+      '<li>I take care of a young child</li>' +
+      '<li>I go to school at least half time</li>' +
+      '<li>I am getting treatment for drugs or alcohol</li>' +
+      '<li>I recently got out of jail or prison</li>' +
+      '<li>I am 65 or older</li>' +
+      '</ul>' +
+      '<button class="opt" onclick="setStep('dx')">Yes, one of these is true</button>' +
+      '<button class="opt" onclick="setStep(2)">No, none of these apply</button>' +
+      '<button class="opt" onclick="setStep(2)" style="color:#9e9892">I am not sure - show me my options</button>' +
+      '</div>' + helpBar(d) + bnSrc(d, nm);
+    return;
+  }
+
+  if (S === "dx") {
+    out.innerHTML = '<button class="back" onclick="setStep(0)">&larr; Start over</button>' +
+      '<div class="done"><h2>You likely do not need to volunteer.</h2>' +
+      '<p>People in your situation usually do not have to meet the work rules.</p>' +
+      '<p style="margin-top:14px"><b>What to do:</b> Let your state know so they have the right info about you.</p>' +
+      '<div class="row">' +
+      (d.pu ? '<a class="cta2" href="' + d.pu + '" target="_blank">' + esc(d.p || "Your state site") + ' &rarr;</a>' : "") +
+      (d.lu ? '<a class="cta2" href="' + d.lu + '" target="_blank">' + esc(d.l || "Call 211") + ' &rarr;</a>' : "") +
+      '</div></div>' + helpBar(d) + bnSrc(d, nm);
+    return;
+  }
+
+  if (S === 2) {
+    var warn = "";
+    if (d.na) warn = '<div class="alert"><p><b>In ' + esc(nm) + ':</b> You cannot just say you volunteered. The place where you volunteer must sign a paper proving your hours. Ask them before you start.</p></div>';
+
+    out.innerHTML = '<button class="back" onclick="setStep(0)">&larr; Start over</button>' +
+      urgentBox(d, nm) +
+      '<div class="card"><h2>You may need to volunteer. We can help.</h2>' +
+      '<p>You need <b>80 hours each month</b> - about 4 hours a day, 5 days a week. Volunteering at a food bank, library, shelter, clinic, or other nonprofit counts.</p>' +
+      '<p>You can combine paid work, school, and volunteering to reach 80 hours. For example, 50 hours of work + 30 hours of volunteering.</p>' +
+      '<p>It must be real community service at a qualifying organization. What does not count: political campaigning, informal help for a neighbor, or religious proselytizing as the primary activity.</p>' +
+      '<p>Before you start, ask if they can sign a paper showing your hours. You will need this to prove what you did.</p>' +
+      '<p class="det">You renew every 6 months now (not once a year). At each check, the state looks at just the month before - not all 6 months. Show 80 hours in that one month.</p>' +
+      '<p class="det"><b>If you miss it:</b> you could lose your Medicaid coverage. Some states are giving extra time before removing benefits (hold-harmless period through June 2027). Check with your state.</p>' +
+      lookback + warn + formLink(d) +
+      '<p style="margin-top:20px;font-size:18px;font-weight:700;color:#2d5f3f">Find a volunteer spot and start tracking your hours:</p>' +
+      '<a class="cta" href="https://portal.volunteerresources.org/" target="_blank">&rarr; Find where to volunteer</a>' +
+      '</div>' + helpBar(d) + bnSrc(d, nm);
+    return;
+  }
+}
+
+function doNp(d, nm) {
+  var out = document.getElementById("out");
+  var warn = "";
+  if (d.na) warn = '<div class="alert"><p><b>In ' + esc(nm) + ':</b> Volunteers cannot self-report hours. Your organization must provide signed proof.</p></div>';
+
+  var pnote = "";
+  if (d.pn) pnote = '<div class="note"><p><b>' + esc(nm) + ':</b> ' + esc(d.pn) + '</p></div>';
+
+  var regNote = "";
+  if (d.reg) regNote = '<div class="alert"><p><b>Registration required in ' + esc(nm) + ':</b> Email <a href="mailto:' + d.reg + '" style="color:#92400e;font-weight:700">' + esc(d.reg) + '</a> to register your organization as a volunteer site.</p></div>';
+
+  out.innerHTML = urgentBox(d, nm) + ctxBox(d, nm) +
+    '<div class="card"><h2>What your organization needs to do</h2>' +
+    '<p>Some people who volunteer with you may need proof of their hours to keep their health care or food help.</p>' +
+    '<p><b>Your job is simple:</b> track their hours and sign a form when they ask. They send the form to the state - you do not have to.</p>' +
+    '<p class="det"><b>Privacy rule:</b> Never collect Medicaid IDs, Social Security numbers, or medical details. Your only role is verifying attendance - not determining eligibility.</p>' +
+    '<div class="fields"><b>The verification form must include:</b><ol>' +
+    '<li>Your organization name</li>' +
+    '<li>Address</li>' +
+    '<li>Description of the volunteer activity</li>' +
+    '<li>Dates of service</li>' +
+    '<li>Total hours</li>' +
+    '<li>Contact person name and phone number + signature</li>' +
+    '</ol></div>' +
+    warn + pnote +
+    '<p class="det"><b>2028 rule:</b> Starting January 1, 2028, all states must request signed documentation when other data cannot verify hours. In 2027, some states accept self-attestation. Build your tracking process now.</p>' +
+    regNote + formLink(d) +
+    '</div>' +
+    '<div class="gcta"><h2>Post volunteer opportunities for free</h2>' +
+    '<p>List your opportunities on the Volunteer Pathways portal so people who need community service hours can find you.</p>' +
+    '<a class="cta" href="https://portal.volunteerresources.org/" target="_blank" style="margin-top:8px">&rarr; Post opportunities for free</a>' +
+    '<p style="margin-top:20px;font-size:15px;color:#6b6560">Need more tools to manage volunteers, track hours, and report to the state? <a href="https://goldenvolunteer.com/demo" target="_blank" style="color:#2d5f3f;font-weight:700">Schedule a demo with Golden &rarr;</a></p>' +
+    '</div>' + npSrc(d, nm);
+}
+</script>
+</body>
+</html>
