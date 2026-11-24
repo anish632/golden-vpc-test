@@ -66,6 +66,44 @@ main{padding:28px 0 80px}
 .fields li{font-size:15px;padding:2px 0}
 .gcta{background:#f1f8e9;border:2px solid #4a9a66;border-radius:16px;padding:28px;margin-bottom:16px}
 .gcta h2{font-size:19px;font-weight:700;color:#2d5f3f;margin-bottom:14px}
+.badge{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin-left:8px;vertical-align:middle;letter-spacing:.3px;text-transform:uppercase}
+.badge.now{background:#fef2f2;color:#b91c1c;border:1px solid #f0a8a8}
+.badge.soon{background:#fef3c7;color:#92400e;border:1px solid #e3c389}
+.badge.snap{background:#eef2ff;color:#3730a3;border:1px solid #c0c7f2}
+.share{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px;padding:14px 18px;background:#fff;border:2px dashed #c4beb6;border-radius:12px}
+.share p{font-size:14px;color:#6b6560;margin:0;flex:1;min-width:180px}
+.share button{padding:11px 18px;border:2px solid #4a9a66;background:#f1f8e9;color:#2d5f3f;border-radius:10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.share button:hover{background:#e8f5e9}
+.trk{background:#fff;border:2px solid #4a9a66;border-radius:14px;padding:22px;margin-top:18px}
+.trk h3{font-size:17px;color:#2d5f3f;font-weight:700;margin-bottom:4px}
+.trk .mo{font-size:13px;color:#6b6560;margin-bottom:14px}
+.barwrap{background:#eae7e2;border-radius:999px;height:16px;overflow:hidden;margin:10px 0 6px}
+.barfill{height:100%;background:#4a9a66;border-radius:999px;transition:width .3s;min-width:2px}
+.barfill.full{background:#2d5f3f}
+.trk .tot{font-size:15px;font-weight:700;color:#2a2520;margin-bottom:14px}
+.trk .tot.met{color:#2d5f3f}
+.tform{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-top:12px}
+.tform .fld{display:flex;flex-direction:column;gap:3px}
+.tform label{font-size:12px;font-weight:700;color:#6b6560}
+.tform input{padding:10px 12px;border:2px solid #d4d0cb;border-radius:9px;font-family:inherit;font-size:15px;background:#fff;color:#2a2520}
+.tform input:focus{border-color:#3a7a52;outline:2px solid #e8f5e9}
+.tform input.date{min-width:150px}.tform input.org{min-width:160px;flex:1}.tform input.hrs{width:84px}
+.tadd{padding:11px 18px;border:none;background:#2d5f3f;color:#fff;border-radius:9px;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.tadd:hover{background:#3a7a52}
+.tlist{list-style:none;padding:0;margin:14px 0 0}
+.tlist li{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid #eae7e2;font-size:14px}
+.tlist .th{font-weight:700;color:#2d5f3f;min-width:54px}
+.tlist .to{flex:1;color:#4a4540}.tlist .td{color:#9e9892;font-size:13px}
+.tlist .del{background:none;border:none;color:#b91c1c;font-size:13px;font-weight:700;cursor:pointer;padding:4px 6px}
+.tempty{font-size:14px;color:#9e9892;margin-top:12px;font-style:italic}
+.tnote{font-size:12px;color:#9e9892;margin-top:10px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#2a2520;color:#fff;padding:12px 22px;border-radius:999px;font-size:15px;font-weight:600;z-index:50;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.show{opacity:1}
+@media print{
+  .bar,.tabs,.help,.share,.back,.tform,.cta,.cta2,.gcta,.toast{display:none!important}
+  header{background:#1a3a2a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{font-size:13px}.card,.done,.ctx,.src{border-color:#ccc!important}
+}
 </style>
 </head>
 <body>
@@ -76,8 +114,8 @@ main{padding:28px 0 80px}
 
 <div class="bar"><div class="w"><div class="bi">
 <div>
-<label>Your state</label><br>
-<select id="pk" onchange="S=0;go()">
+<label for="pk">Your state</label><br>
+<select id="pk" onchange="S=0;go();syncURL()">
 <option value="">Pick a state...</option>
 <option value="Alabama">Alabama</option>
 <option value="Alaska">Alaska</option>
@@ -134,15 +172,16 @@ main{padding:28px 0 80px}
 </select>
 </div>
 <div class="tabs">
-<button class="tab on" id="tb" onclick="T='b';S=0;updTabs();go()">I get benefits</button>
-<button class="tab" id="tn" onclick="T='n';S=0;updTabs();go()">I run a nonprofit</button>
+<button class="tab on" id="tb" aria-pressed="true" onclick="T='b';S=0;updTabs();go();syncURL()">I get benefits</button>
+<button class="tab" id="tn" aria-pressed="false" onclick="T='n';S=0;updTabs();go();syncURL()">I run a nonprofit</button>
 </div>
 </div></div></div>
 
 <main><div class="w">
-<div id="out">
+<div id="out" aria-live="polite">
 <div class="empty"><h2>Pick your state above</h2><p>We'll show you what to do next.</p></div>
 </div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 </div></main>
 
 <script type="text/javascript">
@@ -151,8 +190,11 @@ var T = "b";
 var S = 0;
 
 function updTabs() {
-  document.getElementById("tb").className = T === "b" ? "tab on" : "tab";
-  document.getElementById("tn").className = T === "n" ? "tab on" : "tab";
+  var tb = document.getElementById("tb"), tn = document.getElementById("tn");
+  tb.className = T === "b" ? "tab on" : "tab";
+  tn.className = T === "n" ? "tab on" : "tab";
+  tb.setAttribute("aria-pressed", T === "b" ? "true" : "false");
+  tn.setAttribute("aria-pressed", T === "n" ? "true" : "false");
 }
 
 function esc(s) {
@@ -180,19 +222,25 @@ function go() {
 
 function helpBar(d) {
   if (!d.lu) return "";
-  return '<div class="help"><p>Have questions? Want to talk to someone? <b>Call 211</b> - it is free and confidential.</p><a href="' + d.lu + '" target="_blank">' + esc(d.l || "Call 211") + ' &rarr;</a></div>';
+  return '<div class="help"><p>Have questions? Want to talk to someone? <b>Call 211</b> - it is free and confidential.</p><a href="' + d.lu + '" target="_blank" rel="noopener noreferrer">' + esc(d.l || "Call 211") + ' &rarr;</a></div>';
 }
 
 function srcBox(links) {
   var items = "";
   for (var i = 0; i < links.length; i++) {
     if (links[i][1]) {
-      items += '<a href="' + links[i][1] + '" target="_blank">' + esc(links[i][0]) + '<span class="dm">' + esc(getDom(links[i][1])) + '</span></a>';
+      items += '<a href="' + links[i][1] + '" target="_blank" rel="noopener noreferrer">' + esc(links[i][0]) + '<span class="dm">' + esc(getDom(links[i][1])) + '</span></a>';
     }
   }
   if (!items) return "";
-  items += '<a href="https://www.medicaid.gov/resources-for-states/working-families-tax-cut-legislation/community-engagement" target="_blank">Federal rules (CMS)<span class="dm">medicaid.gov</span></a>';
-  return '<div class="src"><h3>Official state sources</h3>' + items + '<div class="disc">These rules may change. Check your state resources directly to confirm. <a href="mailto:info@volunteerpathwayscoalition.org?subject=H.R.%201%20State%20Rule%20Update">Work for a state agency? Submit an update.</a></div></div>';
+  items += '<a href="https://www.medicaid.gov/resources-for-states/working-families-tax-cut-legislation/community-engagement" target="_blank" rel="noopener noreferrer">Federal rules (CMS)<span class="dm">medicaid.gov</span></a>';
+  return shareBar() + '<div class="src"><h3>Official state sources</h3>' + items + '<div class="disc">These rules may change. Check your state resources directly to confirm. <a href="mailto:info@volunteerpathwayscoalition.org?subject=H.R.%201%20State%20Rule%20Update">Work for a state agency? Submit an update.</a></div></div>';
+}
+
+function shareBar() {
+  return '<div class="share"><p>Found this helpful? Send it to someone who needs it - the link opens to this same state.</p>' +
+    '<button type="button" onclick="copyShare()">&#128279; Copy share link</button>' +
+    '<button type="button" onclick="window.print()">&#128424; Print / save PDF</button></div>';
 }
 
 function bnSrc(d, nm) {
@@ -216,7 +264,7 @@ function npSrc(d, nm) {
 
 function formLink(d) {
   if (!d.fn || !d.fu) return "";
-  return '<div class="note"><p><b>Your state has an official form:</b> <a href="' + d.fu + '" target="_blank" style="color:#2d5f3f;font-weight:700">' + esc(d.fn) + '</a></p></div>';
+  return '<div class="note"><p><b>Your state has an official form:</b> <a href="' + d.fu + '" target="_blank" rel="noopener noreferrer" style="color:#2d5f3f;font-weight:700">' + esc(d.fn) + '</a></p></div>';
 }
 
 function ctxBox(d, nm) {
@@ -225,7 +273,14 @@ function ctxBox(d, nm) {
   else if (d.s.indexOf("Enforcing") >= 0) t = "<b>" + esc(nm) + "</b> is already enforcing work rules. Adults 19-64 on Medicaid must show 80 hours/month of work, school, or volunteering.";
   else if (d.s.indexOf("Soft") >= 0) t = "<b>" + esc(nm) + "</b> is tracking hours now but not removing coverage yet. Full rules start January 2027.";
   else t = "<b>" + esc(nm) + "</b> starts new Medicaid rules January 1, 2027. Adults 19-64 must show 80 hours/month of work, school, or volunteering.";
-  return '<div class="ctx">' + t + '</div>';
+  return '<div class="ctx">' + statusBadge(d) + t + '</div>';
+}
+
+function statusBadge(d) {
+  if (d.ne) return '<span class="badge snap">SNAP only</span>';
+  if (d.s.indexOf("Enforcing") >= 0) return '<span class="badge now">In effect now</span>';
+  if (d.s.indexOf("Soft") >= 0) return '<span class="badge soon">Tracking now</span>';
+  return '<span class="badge soon">Starts Jan 2027</span>';
 }
 
 function urgentBox(d, nm) {
@@ -238,26 +293,26 @@ function setStep(n) { S = n; go(); }
 function doBn(d, nm) {
   var out = document.getElementById("out");
   var lookback = (d.s.indexOf("Enforcing") >= 0 && !d.ne) ? "" : '<p class="det"><b>Important:</b> Most states check the 1 month before you apply or renew. If your state starts January 2027 and you apply that month, the state checks December 2026. Start volunteering now so you have hours to show.</p>';
-  var screener = d.sc ? '<p class="det"><a href="' + d.sc + '" target="_blank" style="color:#2d5f3f;font-weight:600">Use your state screening tool to check if the rules apply to you &rarr;</a></p>' : "";
+  var screener = d.sc ? '<p class="det"><a href="' + d.sc + '" target="_blank" rel="noopener noreferrer" style="color:#2d5f3f;font-weight:600">Use your state screening tool to check if the rules apply to you &rarr;</a></p>' : "";
 
   if (S === 0) {
     out.innerHTML = urgentBox(d, nm) + ctxBox(d, nm) +
       '<div class="card"><h2>Do you already work or go to school?</h2>' +
       '<p>Do you work at least 80 hours a month, earn $580 or more, or go to school at least half time?</p>' +
-      '<button class="opt" onclick="setStep('dw')">Yes, I do</button>' +
+      '<button class="opt" onclick="setStep(10)">Yes, I do</button>' +
       '<button class="opt" onclick="setStep(1)">No</button>' +
       '<button class="opt" onclick="setStep(1)" style="color:#9e9892">I am not sure</button>' +
       '</div>' + lookback + screener + helpBar(d) + bnSrc(d, nm);
     return;
   }
 
-  if (S === "dw") {
+  if (S === 10) {
     out.innerHTML = '<button class="back" onclick="setStep(0)">&larr; Start over</button>' +
       '<div class="done"><h2>You are likely already covered.</h2>' +
       '<p>If you work enough hours or go to school, you already meet the rules.</p>' +
       '<p style="margin-top:14px;font-size:15px;color:#6b6560">Make sure your state has your latest information so nothing changes by mistake.</p>' +
       '<p class="det">You renew every 6 months now (not once a year). At each check, the state looks at just the month before - not all 6 months. Show 80 hours in that one month.</p>' +
-      (d.pu ? '<a class="cta2" href="' + d.pu + '" target="_blank">Check your info on ' + esc(d.p || "your state site") + ' &rarr;</a>' : "") +
+      (d.pu ? '<a class="cta2" href="' + d.pu + '" target="_blank" rel="noopener noreferrer">Check your info on ' + esc(d.p || "your state site") + ' &rarr;</a>' : "") +
       '</div>' + helpBar(d) + bnSrc(d, nm);
     return;
   }
@@ -274,21 +329,21 @@ function doBn(d, nm) {
       '<li>I recently got out of jail or prison</li>' +
       '<li>I am 65 or older</li>' +
       '</ul>' +
-      '<button class="opt" onclick="setStep('dx')">Yes, one of these is true</button>' +
+      '<button class="opt" onclick="setStep(11)">Yes, one of these is true</button>' +
       '<button class="opt" onclick="setStep(2)">No, none of these apply</button>' +
       '<button class="opt" onclick="setStep(2)" style="color:#9e9892">I am not sure - show me my options</button>' +
       '</div>' + helpBar(d) + bnSrc(d, nm);
     return;
   }
 
-  if (S === "dx") {
+  if (S === 11) {
     out.innerHTML = '<button class="back" onclick="setStep(0)">&larr; Start over</button>' +
       '<div class="done"><h2>You likely do not need to volunteer.</h2>' +
       '<p>People in your situation usually do not have to meet the work rules.</p>' +
       '<p style="margin-top:14px"><b>What to do:</b> Let your state know so they have the right info about you.</p>' +
       '<div class="row">' +
-      (d.pu ? '<a class="cta2" href="' + d.pu + '" target="_blank">' + esc(d.p || "Your state site") + ' &rarr;</a>' : "") +
-      (d.lu ? '<a class="cta2" href="' + d.lu + '" target="_blank">' + esc(d.l || "Call 211") + ' &rarr;</a>' : "") +
+      (d.pu ? '<a class="cta2" href="' + d.pu + '" target="_blank" rel="noopener noreferrer">' + esc(d.p || "Your state site") + ' &rarr;</a>' : "") +
+      (d.lu ? '<a class="cta2" href="' + d.lu + '" target="_blank" rel="noopener noreferrer">' + esc(d.l || "Call 211") + ' &rarr;</a>' : "") +
       '</div></div>' + helpBar(d) + bnSrc(d, nm);
     return;
   }
@@ -308,11 +363,123 @@ function doBn(d, nm) {
       '<p class="det"><b>If you miss it:</b> you could lose your Medicaid coverage. Some states are giving extra time before removing benefits (hold-harmless period through June 2027). Check with your state.</p>' +
       lookback + warn + formLink(d) +
       '<p style="margin-top:20px;font-size:18px;font-weight:700;color:#2d5f3f">Find a volunteer spot and start tracking your hours:</p>' +
-      '<a class="cta" href="https://portal.volunteerresources.org/" target="_blank">&rarr; Find where to volunteer</a>' +
-      '</div>' + helpBar(d) + bnSrc(d, nm);
+      '<a class="cta" href="https://portal.volunteerresources.org/" target="_blank" rel="noopener noreferrer">&rarr; Find where to volunteer</a>' +
+      '</div>' + hoursTracker() + helpBar(d) + bnSrc(d, nm);
     return;
   }
 }
+
+// ---- Volunteer hours tracker (saved in this browser) ----
+function monthKey() { var n = new Date(); return n.getFullYear() + "-" + String(n.getMonth() + 1).padStart(2, "0"); }
+function monthLabel() { return new Date().toLocaleDateString(undefined, { month: "long", year: "numeric" }); }
+function todayStr() { var n = new Date(); return n.getFullYear() + "-" + String(n.getMonth() + 1).padStart(2, "0") + "-" + String(n.getDate()).padStart(2, "0"); }
+
+function loadHours() {
+  try { var r = localStorage.getItem("vpc_hours"); return r ? JSON.parse(r) : []; } catch (e) { return []; }
+}
+function saveHours(a) { try { localStorage.setItem("vpc_hours", JSON.stringify(a)); } catch (e) {} }
+
+function addHours() {
+  var dEl = document.getElementById("th_date"), oEl = document.getElementById("th_org"), hEl = document.getElementById("th_hrs");
+  if (!dEl || !hEl) return;
+  var h = parseFloat(hEl.value);
+  if (!h || h <= 0) { toast("Enter how many hours"); hEl.focus(); return; }
+  if (h > 24) h = 24;
+  var all = loadHours();
+  all.push({ mk: (dEl.value || todayStr()).slice(0, 7), d: dEl.value || todayStr(), o: (oEl.value || "").slice(0, 80), h: Math.round(h * 10) / 10 });
+  saveHours(all);
+  toast("Added " + (Math.round(h * 10) / 10) + " hours");
+  go();
+}
+function delHours(i) {
+  var cur = loadHours().filter(function (e) { return e.mk === monthKey(); });
+  var tgt = cur[i];
+  if (!tgt) return;
+  var all = loadHours(); var removed = false;
+  for (var j = 0; j < all.length; j++) {
+    if (!removed && all[j].mk === tgt.mk && all[j].d === tgt.d && all[j].o === tgt.o && all[j].h === tgt.h) { all.splice(j, 1); removed = true; }
+  }
+  saveHours(all); go();
+}
+
+function hoursTracker() {
+  var all = loadHours();
+  var cur = all.filter(function (e) { return e.mk === monthKey(); });
+  var total = 0;
+  for (var i = 0; i < cur.length; i++) total += (cur[i].h || 0);
+  total = Math.round(total * 10) / 10;
+  var pct = Math.min(100, Math.round((total / 80) * 100));
+  var met = total >= 80;
+  var rows = "";
+  if (cur.length === 0) {
+    rows = '<p class="tempty">No hours logged yet this month. Add your first session above.</p>';
+  } else {
+    rows = '<ul class="tlist">';
+    for (var k = 0; k < cur.length; k++) {
+      rows += '<li><span class="th">' + cur[k].h + ' hr</span>' +
+        '<span class="to">' + (esc(cur[k].o) || "Volunteering") + '</span>' +
+        '<span class="td">' + esc(cur[k].d) + '</span>' +
+        '<button class="del" onclick="delHours(' + k + ')" aria-label="Remove entry">Remove</button></li>';
+    }
+    rows += '</ul>';
+  }
+  return '<div class="trk"><h3>Track your volunteer hours</h3>' +
+    '<p class="mo">' + esc(monthLabel()) + ' &middot; goal: 80 hours</p>' +
+    '<div class="barwrap"><div class="barfill' + (met ? ' full' : '') + '" style="width:' + pct + '%"></div></div>' +
+    '<p class="tot' + (met ? ' met' : '') + '">' + total + ' of 80 hours' + (met ? ' &check; goal met this month' : ' (' + Math.max(0, Math.round((80 - total) * 10) / 10) + ' to go)') + '</p>' +
+    '<div class="tform">' +
+    '<div class="fld"><label for="th_date">Date</label><input class="date" type="date" id="th_date" value="' + todayStr() + '"></div>' +
+    '<div class="fld org"><label for="th_org">Where (optional)</label><input class="org" type="text" id="th_org" placeholder="Food bank, library..."></div>' +
+    '<div class="fld"><label for="th_hrs">Hours</label><input class="hrs" type="number" id="th_hrs" min="0" max="24" step="0.5" placeholder="4"></div>' +
+    '<button class="tadd" onclick="addHours()">Add</button>' +
+    '</div>' + rows +
+    '<p class="tnote">Saved only on this device, just for you. Keep the signed proof from each organization - this tracker is for your own records.</p>' +
+    '</div>';
+}
+
+function toast(msg) {
+  var t = document.getElementById("toast");
+  if (!t) return;
+  t.textContent = msg; t.className = "toast show";
+  clearTimeout(window.__tt);
+  window.__tt = setTimeout(function () { t.className = "toast"; }, 2200);
+}
+
+// ---- Shareable URL + remembered state ----
+function syncURL() {
+  var nm = document.getElementById("pk").value;
+  try {
+    var p = new URLSearchParams();
+    if (nm) { p.set("state", nm); p.set("for", T === "n" ? "nonprofit" : "benefits"); }
+    var q = p.toString();
+    history.replaceState(null, "", q ? "?" + q : location.pathname);
+    if (nm) localStorage.setItem("vpc_last", nm + "|" + T);
+  } catch (e) {}
+}
+
+function copyShare() {
+  var url = location.href;
+  function done() { toast("Link copied - share it to let others view this state"); }
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(done, function () { prompt("Copy this link:", url); }); }
+    else { prompt("Copy this link:", url); }
+  } catch (e) { prompt("Copy this link:", url); }
+}
+
+function initApp() {
+  var nm = "", forv = "";
+  try {
+    var p = new URLSearchParams(location.search);
+    nm = p.get("state") || ""; forv = p.get("for") || "";
+    if (!nm) { var last = localStorage.getItem("vpc_last"); if (last) { var parts = last.split("|"); nm = parts[0]; forv = parts[1] === "n" ? "nonprofit" : "benefits"; } }
+  } catch (e) {}
+  if (forv === "nonprofit" || forv === "n") T = "n";
+  updTabs();
+  if (nm && D[nm]) { document.getElementById("pk").value = nm; S = 0; go(); }
+  else { go(); }
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initApp);
+else initApp();
 
 function doNp(d, nm) {
   var out = document.getElementById("out");
@@ -344,8 +511,8 @@ function doNp(d, nm) {
     '</div>' +
     '<div class="gcta"><h2>Post volunteer opportunities for free</h2>' +
     '<p>List your opportunities on the Volunteer Pathways portal so people who need community service hours can find you.</p>' +
-    '<a class="cta" href="https://portal.volunteerresources.org/" target="_blank" style="margin-top:8px">&rarr; Post opportunities for free</a>' +
-    '<p style="margin-top:20px;font-size:15px;color:#6b6560">Need more tools to manage volunteers, track hours, and report to the state? <a href="https://goldenvolunteer.com/demo" target="_blank" style="color:#2d5f3f;font-weight:700">Schedule a demo with Golden &rarr;</a></p>' +
+    '<a class="cta" href="https://portal.volunteerresources.org/" target="_blank" rel="noopener noreferrer" style="margin-top:8px">&rarr; Post opportunities for free</a>' +
+    '<p style="margin-top:20px;font-size:15px;color:#6b6560">Need more tools to manage volunteers, track hours, and report to the state? <a href="https://goldenvolunteer.com/demo" target="_blank" rel="noopener noreferrer" style="color:#2d5f3f;font-weight:700">Schedule a demo with Golden &rarr;</a></p>' +
     '</div>' + npSrc(d, nm);
 }
 </script>
