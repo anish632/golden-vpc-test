@@ -361,6 +361,7 @@ function bnSrc(d, nm) {
 
 function npSrc(d, nm) {
   return srcBox([
+    ...(nm === "California" ? [["California Volunteers volunteer opportunities", "https://www.californiavolunteers.ca.gov/volunteer-opportunities/"]] : []),
     [d.hp || nm + " rules", d.h],
     [d.np || "State agency", d.npu || ""],
     [d.npa || "", d.npau || ""],
@@ -486,8 +487,8 @@ function doBn(d, nm) {
       '<p class="det"><b>Need help?</b> Call your state office or 211 before you make a plan.</p>' +
       lookback + warn + formLink(d) +
       '<p style="margin-top:20px;font-size:18px;font-weight:700;color:#2d5f3f">Find a volunteer spot and start tracking your hours:</p>' +
-      '<a class="cta" href="https://portal.volunteerresources.org/" target="_blank" rel="noopener noreferrer">&rarr; Find where to volunteer</a>' +
-      '</div>' + hoursTracker() + helpBar(d) + bnSrc(d, nm);
+      '<a class="cta" href="https://portal.goldenvolunteer.com/" target="_blank" rel="noopener noreferrer">&rarr; Create your Golden volunteer profile</a>' +
+      '</div>' + helpBar(d) + bnSrc(d, nm);
     return;
   }
 }
@@ -636,7 +637,7 @@ function doNp(d, nm) {
   out.innerHTML = urgentBox(d, nm) + ctxBox(d, nm) +
     '<div class="card"><h2>What your organization needs to do</h2>' +
     '<p>Some people may need proof of volunteer hours for health coverage or food help. The person’s state will tell them what proof they need.</p>' +
-    '<p><b>Your role:</b> Keep a record of the hours. If asked, sign a form that confirms the work was done.</p>' +
+    '<p><b>Your role:</b> Welcome volunteers, record their service, and confirm their hours when needed. Golden helps your organization recruit volunteers, track hours, and report service automatically, so volunteers and your team can avoid paper forms.</p>' +
     '<p class="det"><b>Keep people’s details private.</b> Do not ask for benefit numbers, Social Security numbers, or health details. Your role is to confirm hours, not decide who gets help.</p>' +
     '<div class="fields"><b>The verification form must include:</b><ol>' +
     '<li>Your organization name</li>' +
@@ -647,15 +648,15 @@ function doNp(d, nm) {
     '<li>Name and phone of the person who signs</li>' +
     '<li>Signature</li>' +
     '</ol></div>' +
-    '<div class="note"><p><b>Sample tools</b></p><p><a href="verification-form.html">Print a sample hours form</a></p><p><a href="volunteer-hours-log-template.csv" download>Download a simple hours log</a></p><p class="det">These are samples. States may need a different form. Ask before using them.</p></div>' +
+    
     warn + pnote +
-    '<p class="det">Ask the volunteer which state form to use. Rules can differ by state.</p>' +
+    
     regNote + formLink(d) +
     '</div>' +
-    '<div class="gcta"><h2>Post volunteer opportunities for free</h2>' +
-    '<p>List your opportunities on the Volunteer Pathways portal so people who need community service hours can find you.</p>' +
+    '<div class="gcta"><h2>Automate volunteer hours and reporting with Golden</h2>' +
+    '<p>Golden helps your organization recruit volunteers, track and verify their hours, and report service. Volunteers can use their Golden profile to find opportunities and keep their service history together.</p>' +
     '<a class="cta cta-techsoup" href="https://www.techsoup.org/products/golden-volunteer-management-community-plan-techsoup-plus-g-58828-" target="_blank" rel="noopener noreferrer" style="margin-top:8px">Get Golden free on TechSoup <span aria-hidden="true">↗</span></a>' +
-    '<p style="margin-top:20px;font-size:15px;color:#6b6560">Need more tools to manage volunteers, track hours, and report to the state? <a href="https://goldenvolunteer.com/demo" target="_blank" rel="noopener noreferrer" style="color:#2d5f3f;font-weight:700">Schedule a demo with Golden &rarr;</a></p>' +
+    '<p class="det" style="margin-top:12px">Paper forms are available as a backup if a state requires them: <a href="verification-form.html">sample hours form</a> or <a href="volunteer-hours-log-template.csv" download>simple hours log</a>. Confirm each state’s requirements.</p>' +
     '</div>' + npSrc(d, nm);
 }
 </script>
