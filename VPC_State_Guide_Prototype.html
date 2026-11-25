@@ -361,6 +361,7 @@ function bnSrc(d, nm) {
 
 function npSrc(d, nm) {
   return srcBox([
+    ...(nm === "California" ? [["California Volunteers event portal", "https://events.californiavolunteers.ca.gov/"]] : []),
     [d.hp || nm + " rules", d.h],
     [d.np || "State agency", d.npu || ""],
     [d.npa || "", d.npau || ""],
